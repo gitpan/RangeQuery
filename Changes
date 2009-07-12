@@ -1,5 +1,8 @@
 Revision history for Perl extension RangeQuery.
 
+0.02 Sun Jul 12 21:25:00 2009
+	- Fixed a mistake.
+
 0.01  Sun Jul 12 21:00:00 2009
 	- module is ready to be released
 

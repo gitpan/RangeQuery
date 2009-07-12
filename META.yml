@@ -1,7 +1,7 @@
 --- #YAML:1.0
 name:                RangeQuery
-version:             0.01
-abstract:            retrieves the minimum/maximum value from a set within a given range.
+version:             0.02
+abstract:            retrieves the minimum/maximum value from a sequence within a given range.
 license:             ~
 author:              
     - Joao <jc1@(none)>

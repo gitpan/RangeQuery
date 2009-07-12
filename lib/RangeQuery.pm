@@ -11,26 +11,26 @@ our @EXPORT = qw();
 our %EXPORT_TAGS = ( 'all' => [ qw() ] );
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 
 =head1 NAME
 
-RangeQuery - retrieves the minimum/maximum value from a set within a given range.
+RangeQuery - retrieves the minimum/maximum value from a sequence within a given range.
 
 =head1 SYNOPSIS
 
     use RangeQuery qw(min_value max_value);
 
-    my @set = (4,2,8,6,1,2);
-    my $range = RangeQuery->new(@set);
+    my @sequence = (4,2,8,6,1,2);
+    my $range = RangeQuery->new(@sequence);
     my $min = $range->min_value(1,3);   # 2
     my $max = $range->max_value (4, 6); # 6
 
 
 =head1 DESCRIPTION
 
-Retrieves the minimum/maximum value from a set within a given range. The range is represented with two 1-based indexes.
+Retrieves the minimum/maximum value from a sequence within a given range. The range is represented with two 1-based indexes.
 It takes O(n log n) to build the object and O(1) to retrieve a value.
 
 
@@ -44,14 +44,14 @@ This builds the appropriate data structure in order to retrieve values efficient
 =cut
 
 sub new {
-    my ($self, @set) = @_;
+    my ($self, @sequence) = @_;
 
-    croak "Set is empty." if !$#set;
+    croak "Set is empty." if !$#sequence;
 
-    my @new_set = @set;
+    my @new_sequence = @sequence;
     my (@max, @min);
 
-    my $obj = [\@new_set, \@max, \@min];
+    my $obj = [\@new_sequence, \@max, \@min];
     bless $obj, $self;
     _build $obj;
 
@@ -72,9 +72,9 @@ sub max_value {
     croak "Wrong number of parameters." if @_ != 3;
 
     my ($self, $left, $right) = @_;
-    my ($set, $max, $min) = ($self->[0], $self->[1], $self->[2]);
+    my ($sequence, $max, $min) = ($self->[0], $self->[1], $self->[2]);
 
-    croak "Invalid range." if $left > $right || $left < 1 || $right > $#{$set} + 1;
+    croak "Invalid range." if $left > $right || $left < 1 || $right > $#{$sequence} + 1;
 
     $left--, $right--;
     my $t = log ($right - $left + 1) / (log 2);
@@ -94,9 +94,9 @@ sub min_value {
     croak "Wrong number of parameters." if @_ != 3;
 
     my ($self, $left, $right) = @_;
-    my ($set, $max, $min) = ($self->[0], $self->[1], $self->[2]);
+    my ($sequence, $max, $min) = ($self->[0], $self->[1], $self->[2]);
 
-    croak "Invalid range." if $left > $right || $left < 1 || $right > $#{$set} + 1;
+    croak "Invalid range." if $left > $right || $left < 1 || $right > $#{$sequence} + 1;
 
     $left--, $right--;
     my $t = log ($right - $left + 1) / (log 2);
@@ -107,11 +107,11 @@ sub min_value {
 
 sub _build {
     my ($self) = @_;
-    my ($set, $max, $min) = @{$self};
-    my $size = $#{$set};
+    my ($sequence, $max, $min) = @{$self};
+    my $size = $#{$sequence};
 
     for my $i (0..$size) {
-	$min->[$i][0] = $max->[$i][0] = $set->[$i];
+	$min->[$i][0] = $max->[$i][0] = $sequence->[$i];
     }
 
     my $s = (log $size + 1) / log 2;

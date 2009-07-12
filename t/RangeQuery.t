@@ -13,27 +13,27 @@ BEGIN { use_ok('RangeQuery') };
 # Insert your test code below, the Test::More module is use()ed here so read
 # its man page ( perldoc Test::More ) for help writing this test script.
 
-my @set = (9,4,1,6,3,1,8,-2,54,2,9,-5,6,2,3,597,3,6);
-my $range = RangeQuery->new(@set);
+my @sequence = (9,4,1,6,3,1,8,-2,54,2,9,-5,6,2,3,597,3,6);
+my $range = RangeQuery->new(@sequence);
 is($range->max_value(1,1), 9);
 is($range->max_value(1,2), 9);
 is($range->max_value(1,3), 9);
 is($range->max_value(8,8), -2);
-is($range->max_value(1,$#set), 597);
+is($range->max_value(1,$#sequence), 597);
 is($range->max_value(7,15), 54);
 is($range->max_value(16,17), 597);
-is($range->max_value($#set+1,$#set+1), 6);
+is($range->max_value($#sequence+1,$#sequence+1), 6);
 
 is($range->min_value(1,2), 4);
 is($range->min_value(1,3), 1);
 is($range->min_value(8,8), -2);
-is($range->min_value(1,$#set), -5);
+is($range->min_value(1,$#sequence), -5);
 is($range->min_value(7,15), -5);
 is($range->min_value(16,17), 3);
-is($range->min_value($#set+1,$#set+1), 6);
+is($range->min_value($#sequence+1,$#sequence+1), 6);
 
-my @set2 = (-1,-2,-3,-4);
-$range = RangeQuery->new(@set2);
+my @sequence2 = (-1,-2,-3,-4);
+$range = RangeQuery->new(@sequence2);
 is($range->max_value(1,1), -1);
 is($range->max_value(1,2), -1);
 is($range->max_value(1,3), -1);
