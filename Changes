@@ -1,0 +1,9 @@
+Revision history for Perl extension RangeQuery.
+
+0.01  Sun Jul 12 21:00:00 2009
+	- module is ready to be released
+
+0.01  Sun Jul 12 20:44:50 2009
+	- original version; created by h2xs 1.23 with options
+		-Xan RangeQuery
+
