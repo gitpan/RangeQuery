@@ -15,32 +15,32 @@ BEGIN { use_ok('RangeQuery') };
 
 my @sequence = (9,4,1,6,3,1,8,-2,54,2,9,-5,6,2,3,597,3,6);
 my $range = RangeQuery->new(@sequence);
-is($range->max_value(1,1), 9);
-is($range->max_value(1,2), 9);
-is($range->max_value(1,3), 9);
-is($range->max_value(8,8), -2);
-is($range->max_value(1,$#sequence), 597);
-is($range->max_value(7,15), 54);
-is($range->max_value(16,17), 597);
-is($range->max_value($#sequence+1,$#sequence+1), 6);
+is($range->max_value(0,0), 9);
+is($range->max_value(0,1), 9);
+is($range->max_value(0,2), 9);
+is($range->max_value(7,7), -2);
+is($range->max_value(0,$#sequence), 597);
+is($range->max_value(6,14), 54);
+is($range->max_value(15,16), 597);
+is($range->max_value($#sequence,$#sequence), 6);
 
-is($range->min_value(1,2), 4);
-is($range->min_value(1,3), 1);
-is($range->min_value(8,8), -2);
-is($range->min_value(1,$#sequence), -5);
-is($range->min_value(7,15), -5);
-is($range->min_value(16,17), 3);
-is($range->min_value($#sequence+1,$#sequence+1), 6);
+is($range->min_value(0,1), 4);
+is($range->min_value(0,2), 1);
+is($range->min_value(7,7), -2);
+is($range->min_value(0,$#sequence), -5);
+is($range->min_value(6,14), -5);
+is($range->min_value(15,16), 3);
+is($range->min_value($#sequence,$#sequence), 6);
 
 my @sequence2 = (-1,-2,-3,-4);
 $range = RangeQuery->new(@sequence2);
-is($range->max_value(1,1), -1);
-is($range->max_value(1,2), -1);
-is($range->max_value(1,3), -1);
-is($range->max_value(1,4), -1);
+is($range->max_value(0,0), -1);
+is($range->max_value(0,1), -1);
+is($range->max_value(0,2), -1);
+is($range->max_value(0,3), -1);
 
 
-is($range->min_value(1,1), -1);
-is($range->min_value(1,2), -2);
-is($range->min_value(1,3), -3);
-is($range->min_value(1,4), -4);
+is($range->min_value(0,0), -1);
+is($range->min_value(0,1), -2);
+is($range->min_value(0,2), -3);
+is($range->min_value(0,3), -4);
