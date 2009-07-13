@@ -4,15 +4,7 @@ use strict;
 use warnings;
 use Carp;
 
-require Exporter;
-
-our @ISA = qw(Exporter);
-our @EXPORT = qw();
-our %EXPORT_TAGS = ( 'all' => [ qw() ] );
-our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
-
-our $VERSION = '0.02';
-
+our $VERSION = '0.03';
 
 =head1 NAME
 
@@ -31,7 +23,7 @@ RangeQuery - retrieves the minimum/maximum value from a sequence within a given 
 =head1 DESCRIPTION
 
 Retrieves the minimum/maximum value from a sequence within a given range. The range is represented with two 1-based indexes.
-It takes O(n log n) to build the object and O(1) to retrieve a value.
+It takes O(n log n) to build the object and O(1) to retrieve a min/max value.
 
 
 =head1 METHODS
@@ -115,7 +107,7 @@ sub _build {
     }
 
     my $s = (log $size + 1) / log 2;
-    for my $i (1 .. (log ($size+1)) / (log 2)) {
+    for my $i (1 .. (log ($size + 1)) / (log 2)) {
 	for (my $j = 0; $j + (1 << $i) - 1 <= $size; $j++) {
 	    $min->[$j][$i] = _min($min->[$j][$i - 1], $min->[$j + (1 << ($i - 1))][$i - 1]);
 	    $max->[$j][$i] = _max($max->[$j][$i - 1], $max->[$j + (1 << ($i - 1))][$i - 1]);
